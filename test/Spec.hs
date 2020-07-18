@@ -11,23 +11,23 @@ main =
   hspec $ do
     describe "parseLiteral" $ do
       it "parses resolved text" $ do
-        let result = P.parseOnly parseLiteralTextSome "hello world"
+        let result = P.parseOnly parseLiteralText "hello world"
         result `shouldBe` (Right $ Literal "hello world")
       it "parses resolved text and hash" $ do
-        let result = P.parseOnly parseLiteralTextSome "hello world#"
+        let result = P.parseOnly parseLiteralText "hello world#"
         result `shouldBe` (Right $ Literal "hello world")
       it "parses resolved text and ?" $ do
-        let result = P.parseOnly parseLiteralTextSome "hello wo?rld?#"
+        let result = P.parseOnly parseLiteralText "hello wo?rld?#"
         result `shouldBe` (Right $ Literal "hello wo")
-    describe "parseHashSome" $ do
+    describe "parseHash" $ do
       it "works with - #####" $ do
-        let result = P.parseOnly parseHashSome "#####"
+        let result = P.parseOnly parseHash "#####"
         result `shouldBe` (Right [Hash 5])
       it "works with - ###{hello}" $ do
-        let result = P.parseOnly parseHashSome "###{hello}"
+        let result = P.parseOnly parseHash "###{hello}"
         result `shouldBe` (Right [Hash 2, Resolve "hello"])
       it "works with - #{hello}" $ do
-        let result = P.parseOnly parseHashSome "#{hello}"
+        let result = P.parseOnly parseHash "#{hello}"
         result `shouldBe` (Right [Resolve "hello"])
     describe "parseFakedata" $ do
       it "works with - hello world" $ do

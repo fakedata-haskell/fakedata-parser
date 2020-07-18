@@ -1,4 +1,9 @@
-module Fakedata.Parser where
+module Fakedata.Parser
+  ( FakeIRValue(..)
+  , parseLiteralText
+  , parseHash
+  , parseFakedata
+  ) where
 
 import Control.Applicative
 import Control.Monad (void)
@@ -14,13 +19,13 @@ data FakeIRValue
   | Resolve Text
   deriving (Show, Eq)
 
-parseLiteralTextSome :: P.Parser FakeIRValue
-parseLiteralTextSome = do
+parseLiteralText :: P.Parser FakeIRValue
+parseLiteralText = do
   literal <- some $ P.satisfy (not . isHashOrQues)
   pure $ Literal $ T.pack literal
 
-parseHashSome :: P.Parser [FakeIRValue]
-parseHashSome = do
+parseHash :: P.Parser [FakeIRValue]
+parseHash = do
   hashes <- some $ P.char '#'
   let numHahes = Prelude.length hashes
   nh <- P.peekChar
@@ -38,8 +43,8 @@ parseHashSome = do
             n -> pure $ [Hash (numHahes - 1), Resolve xs]
         else pure $ [Hash numHahes]
 
-parseQuesSome :: P.Parser FakeIRValue
-parseQuesSome = do
+parseQues :: P.Parser FakeIRValue
+parseQues = do
   ques <- some $ P.char '?'
   pure $ Ques (Prelude.length ques)
 
@@ -48,7 +53,10 @@ singleton x = [x]
 
 parseFakedata :: P.Parser [FakeIRValue]
 parseFakedata = do
-  xs <- many $ ((singleton <$> parseLiteralTextSome) <|> parseHashSome <|> (singleton <$> parseQuesSome))
+  xs <-
+    many $
+    ((singleton <$> parseLiteralText) <|> parseHash <|>
+     (singleton <$> parseQues))
   pure $ concat xs
 
 isHashOrQues :: Char -> Bool
