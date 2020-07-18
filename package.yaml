@@ -1,6 +1,6 @@
-name:                attoparsec-fakedata
+name:                fakedata-parser
 version:             0.1.0.0
-github:              "psibi/attoparsec-fakedata"
+github:              "psibi/fakedata-parser"
 license:             BSD3
 author:              "Sibi Prabakaran"
 maintainer:          "sibi@psibi.in"
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/psibi/attoparsec-fakedata#readme>
+description:         Please see the README on GitHub at <https://github.com/psibi/fakedata-parser#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -27,19 +27,8 @@ dependencies:
 library:
   source-dirs: src
 
-executables:
-  attoparsec-fakedata-exe:
-    main:                Main.hs
-    source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - attoparsec-fakedata
-
 tests:
-  attoparsec-fakedata-test:
+  fakedata-parser-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -47,5 +36,5 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - attoparsec-fakedata
+    - fakedata-parser
     - hspec
