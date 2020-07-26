@@ -1,3 +1,5 @@
 # Changelog for attoparsec-fakedata
 
-## Unreleased changes
+## 0.1.0
+
+* Initial release.
